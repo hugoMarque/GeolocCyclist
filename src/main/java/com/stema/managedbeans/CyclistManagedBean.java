@@ -7,6 +7,7 @@ package com.stema.managedbeans;
 
 import com.stema.beans.Cyclist;
 import com.stema.models.CyclistModel;
+import com.stema.models.CyclistModelDAOSQL;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -30,6 +31,10 @@ public class CyclistManagedBean {
     @EJB
     private CyclistModel cyclistModel;
 
+    
+    @EJB
+    private CyclistModelDAOSQL cyclistModelSQL;
+    
     public CyclistManagedBean() {
     }
 
@@ -40,11 +45,12 @@ public class CyclistManagedBean {
             FacesContext.getCurrentInstance().addMessage("succes", succes);
             
         } else {
-            cyclistModel.create(cyclist);
+            cyclistModel.create(cyclist);   //no SQL
+            cyclistModelSQL.create(cyclist); //SQL
             FacesMessage succes = new FacesMessage(FacesMessage.SEVERITY_INFO, "Merci d'avoir ajouté un cyclist : " + cyclist.getLastName() +" "+ cyclist.getFirstName(), null);
             FacesContext.getCurrentInstance().addMessage("succes", succes);
         }
-
+        
         cyclist = new Cyclist(); //permet de vider les champs sur la page editerCyclist
         return "listerCyclist";
     }

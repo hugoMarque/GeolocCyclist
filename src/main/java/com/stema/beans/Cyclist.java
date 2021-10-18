@@ -5,14 +5,22 @@
  */
 package com.stema.beans;
 
+import com.stema.converter.IdSQLDBConverter;
+import java.io.Serializable;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import org.bson.types.ObjectId;
 
 /**
  *
  * @author Hugo Marque
  */
-public class Cyclist {
+@Entity
+public class Cyclist implements Serializable{
     
+    @Id
+    @Convert(converter=IdSQLDBConverter.class)
     private ObjectId _id;  
     
     private String lastName;
